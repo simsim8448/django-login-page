@@ -1,0 +1,383 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: #080b18;
+    color: #ffffff;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 20% 20%, #20284a 0%, transparent 45%),
+        linear-gradient(135deg, #080b18, #10152b 60%, #080b18);
+    isolation: isolate;
+}
+
+/* ستاره‌های پس‌زمینه */
+.stars {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, #ffffff 1px, transparent 1.5px),
+        radial-gradient(circle, #b9c9ff 1px, transparent 1.5px),
+        radial-gradient(circle, #ffffff 1.5px, transparent 2px);
+    background-size: 110px 110px, 170px 170px, 230px 230px;
+    background-position: 10px 20px, 70px 40px, 100px 90px;
+    opacity: 0.5;
+    animation: starsMove 30s linear infinite;
+}
+
+@keyframes starsMove {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-110px);
+    }
+}
+
+/* لایه تاریکی صفحه */
+.darkness {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.48);
+    transition: background 0.7s ease;
+}
+
+.darkness.light-on {
+    background: rgba(0, 0, 0, 0.12);
+}
+
+/* پرتو چراغ‌قوه */
+.light-beam {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    width: var(--beam-length, 300px);
+    height: 220px;
+    pointer-events: none;
+
+    background: radial-gradient(
+        ellipse at 100% 50%,
+        rgba(255, 248, 225, 0.72) 0%,
+        rgba(255, 235, 185, 0.48) 15%,
+        rgba(255, 225, 160, 0.24) 35%,
+        rgba(255, 220, 150, 0.10) 60%,
+        rgba(255, 220, 150, 0.03) 80%,
+        transparent 100%
+    );
+
+    clip-path: polygon(
+        0 50%,
+        100% 0,
+        100% 100%
+    );
+
+    transform-origin: 0 50%;
+    transform: rotate(var(--beam-angle, 0deg));
+    filter: blur(8px);
+    opacity: 1;
+}
+
+/* تصویر پسر */
+.character {
+    position: absolute;
+    z-index: 4;
+    left: 12%;
+    bottom: 9%;
+    width: 220px;
+    height: 330px;
+    animation: characterFloat 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+
+/* تصویر بزرگ‌تر پسر */
+.character {
+    position: absolute;
+    z-index: 4;
+    left: 8%;
+    bottom: 5%;
+    width: 320px;
+    height: 480px;
+    animation: characterFloat 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.character-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+}
+
+@keyframes characterFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+
+/* کارت ورود */
+.login-card {
+    position: absolute;
+    z-index: 5;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: min(390px, 85vw);
+    padding: 38px 32px;
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 24px;
+
+    background: rgba(19, 24, 47, 0.94);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.7s ease,
+        visibility 0.7s ease,
+        box-shadow 0.7s ease,
+        border-color 0.7s ease,
+        background 0.7s ease;
+}
+
+/* فرم وقتی نور به آن می‌رسد */
+.login-card.login-visible {
+    opacity: 1;
+    visibility: visible;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 50%,
+            rgba(255, 239, 200, 0.22) 0%,
+            rgba(255, 230, 175, 0.12) 25%,
+            rgba(255, 220, 150, 0.05) 50%,
+            rgba(19, 24, 47, 0.96) 100%
+        );
+
+    border-color: rgba(255, 230, 180, 0.35);
+
+    box-shadow:
+        0 0 20px rgba(255, 225, 160, 0.18),
+        0 0 45px rgba(255, 225, 160, 0.12),
+        0 20px 70px rgba(0, 0, 0, 0.4);
+}
+
+/* هاله نور در مرکز فرم */
+.login-card.login-visible::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 242, 210, 0.12) 0%,
+        rgba(255, 230, 180, 0.05) 35%,
+        transparent 70%
+    );
+
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* محتوای فرم بالای هاله نور */
+.login-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* لوگو */
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 18px;
+    width: 58px;
+    height: 58px;
+
+    border-radius: 18px;
+    background: linear-gradient(135deg, #9b8af5, #6553c8);
+
+    font-size: 30px;
+    font-weight: 800;
+
+    box-shadow: 0 8px 25px #7460dc44;
+}
+
+.logo span {
+    color: #ffe19a;
+}
+
+/* عنوان */
+.login-card h1 {
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #aab1cc;
+    font-size: 13px;
+    margin-bottom: 30px;
+    line-height: 1.9;
+}
+
+/* ورودی‌ها */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 13px;
+    color: #d8dcf0;
+}
+
+.input-group input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+
+    border: 1px solid #343b5b;
+    border-radius: 12px;
+    outline: none;
+
+    color: white;
+    background: #11162c;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.input-group input::placeholder {
+    color: #777f9e;
+}
+
+.input-group input:focus {
+    border-color: #9482ef;
+    box-shadow: 0 0 0 3px #9482ef20;
+}
+
+/* رمز عبور */
+.password-box {
+    position: relative;
+}
+
+.password-box input {
+    padding-left: 45px;
+}
+
+.password-box button {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+    color: #aab1cc;
+
+    font-size: 19px;
+    cursor: pointer;
+}
+
+/* دکمه ورود */
+.login-button {
+    width: 100%;
+    height: 50px;
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #9b8af5, #6553c8);
+    color: white;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px #7460dc55;
+}
+
+.login-button span {
+    margin-right: 8px;
+}
+
+/* پیام خطا */
+.error-message {
+    margin-bottom: 15px;
+    padding: 10px;
+
+    border-radius: 9px;
+    background: #7f263544;
+    border: 1px solid #d9577044;
+
+    color: #ffb5c1;
+    font-size: 13px;
+}
+
+/* پایین فرم */
+.bottom-text {
+    text-align: center;
+    margin-top: 25px;
+    color: #8f97b5;
+    font-size: 12px;
+}
+
+.bottom-text span {
+    color: #b5a7ff;
+
+}

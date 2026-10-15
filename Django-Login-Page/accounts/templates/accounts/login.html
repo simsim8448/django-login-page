@@ -1,0 +1,111 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود | Sana</title>
+
+    <link rel="stylesheet" href="{% static 'accounts/login.css' %}">
+</head>
+<body>
+
+<div class="scene" id="scene">
+
+    <!-- ستاره‌ها -->
+    <div class="stars"></div>
+
+    <!-- لایه تاریکی -->
+    <div class="darkness" id="darkness"></div>
+
+    <!-- نور چراغ‌قوه -->
+    <div class="light-beam" id="lightBeam"></div>
+
+    <!-- تصویر پسر -->
+    <div class="character" id="character">
+        <img
+            src="{% static 'accounts/images/boy.PNG' %}"
+            alt="پسر با چراغ‌قوه"
+            class="character-image"
+        >
+    </div>
+
+    <!-- فرم ورود -->
+    <main class="login-card" id="loginCard">
+
+        <div class="logo">S<span>.</span></div>
+
+        <h1>خوش برگشتی!</h1>
+
+        <p class="subtitle">
+            برای ادامه وارد حساب کاربریت شو.
+        </p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label for="username">نام کاربری</label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="نام کاربری خود را وارد کن"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="password">رمز عبور</label>
+
+                <div class="password-box">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="رمز عبور"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        aria-label="نمایش رمز عبور"
+                    >◉</button>
+                </div>
+            </div>
+
+            <button class="login-button" type="submit">
+                ورود به حساب
+                <span>←</span>
+            </button>
+        </form>
+
+        <div class="bottom-text">
+            ورود امن با <span>Django</span>
+        </div>
+
+    </main>
+
+    <!-- راهنمای صفحه -->
+    <div class="hint">
+        چراغ‌قوه را به سمت فرم حرکت بده ✦
+    </div>
+
+</div>
+
+<script src="{% static 'accounts/login.js' %}"></script>
+
+</body>
+</html>
+
